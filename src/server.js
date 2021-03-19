@@ -62,7 +62,7 @@ app.get("/addBook/:book_id/:book_name", function(req,res) {
 
 
 // READ BOOK
-app.get("/viewBook/:book_id", function(req,res){
+app.get("/book/:book_id", function(req,res){
     db.serialize(()=>{
         db.run("SELECT book_id BOOK_ID, book_available BOOK_AVAILABLE, book_name BOOK_NAME, user_id USER_ID" +
             " FROM books WHERE book_id =?", [req.params.book_id], function(err,row){     //db.each() is only one which is funtioning while reading data from the DB
@@ -82,7 +82,7 @@ app.get("/viewBook/:book_id", function(req,res){
 
 
 //GIVE BOOK TO USER
-app.get("/giveBook/:book_id/:user_id", function(req,res){
+app.get("/givebook/:book_id/:user_id", function(req,res){
     db.serialize(()=>{
         db.run("UPDATE books SET book_available = 0, user_id = ? WHERE book_id = ?",
             [req.params.user_id,req.params.book_id], function(err){
@@ -101,7 +101,7 @@ app.get("/giveBook/:book_id/:user_id", function(req,res){
 
 
 //RETURN BOOK TO LIBRARY
-app.get("/returnBook/:book_id", function(req,res){
+app.get("/returnbook/:book_id", function(req,res){
     db.serialize(()=>{
         db.run("UPDATE books SET book_available = 1, user_id = 1 WHERE book_id = ?",
             [req.params.book_id], function(err){
@@ -132,7 +132,7 @@ app.get("/close", function(req,res){
 //157766400000 - 5 years in milliseconds
 let five_years_in_milliseconds = 157766400000
 // CREATE USER
-app.get("/addUser/:user_id/:user_name", function(req,res) {
+app.post("/user/:user_id/:user_name", function(req,res) {
     db.serialize(()=>{
         console.log(req.params);
         db.run("INSERT INTO users(user_id, user_expiry_date, user_name, super_user) VALUES(?,?,?,?)",
@@ -151,7 +151,7 @@ app.get("/addUser/:user_id/:user_name", function(req,res) {
 
 
 //UPDATE USER'S NAME
-app.get("/editUser/:user_id/:user_name", function(req,res){
+app.put("/user/:user_id/:user_name", function(req,res){
     db.serialize(()=>{
         db.run("UPDATE users SET user_name = ? WHERE user_id = ?",
             [req.params.user_name,req.params.user_id], function(err){
@@ -168,7 +168,7 @@ app.get("/editUser/:user_id/:user_name", function(req,res){
 });
 
 //DELETE USER
-app.get('/del/:user_id', function(req,res){
+app.delete('/del/:user_id', function(req,res){
     db.serialize(()=>{
         db.run('DELETE FROM users WHERE user_id = ?', req.params.user_id, function(err) {
             if (err) {
@@ -182,7 +182,7 @@ app.get('/del/:user_id', function(req,res){
 });
 
 //GET USER INFO
-app.get('/viewUserInfo/:user_id', function(req,res){
+app.get('/userinfo/:user_id', function(req,res){
     db.serialize(()=>{
         db.each('SELECT user_name USER_NAME, user_expiry_date USER_EXPIRY_DATE, super_user SUPER_USER FROM users WHERE user_id =?',
             [req.params.user_id], function(err, row){
@@ -201,7 +201,7 @@ app.get('/viewUserInfo/:user_id', function(req,res){
 });
 
 //GET USER'S BOOKS
-app.get('/viewUserBooks/:user_id', function(req,res){
+app.get('/user/:user_id', function(req,res){
     db.serialize(()=>{
         let booksData = {};
         booksData["books"] = [];

@@ -6,6 +6,8 @@ const app = express();
 const db = require('./db/db.js');
 db.init();
 
+
+
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');

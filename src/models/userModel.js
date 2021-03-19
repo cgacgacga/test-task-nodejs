@@ -8,11 +8,7 @@ class UserModel {
   constructor() {
     this.model = new Model();
   }
-  
-  /**
-   *
-   * @return Entity の配列を Resolve する
-   */
+
   findAll() {
     const sql = `
       SELECT
@@ -29,7 +25,7 @@ class UserModel {
         const users = [];
         
         for(const row of rows) {
-          users.push(new UserEntity(row.id, row.name, row.age));
+          users.push(new UserEntity(row.user_id, row.user_expiry_date, row.user_name, row.super_user));
         }
         
         return users;
@@ -55,13 +51,12 @@ class UserModel {
     
     return this.model.findOne(sql, params)
       .then((row) => {
-        return new UserEntity(row.id, row.name, row.age);
+        return new UserEntity(row.user_id, row.user_expiry_date, row.user_name, row.super_user);
       });
   }
   
 
   create(user) {
-    // ID は自動採番させる
     const sql = `
       INSERT INTO users (
           user_expiry_date,
@@ -80,8 +75,8 @@ class UserModel {
     };
     
     return this.model.run(sql, params)
-      .then((id) => {
-        return this.findById(id);
+      .then((user_id) => {
+        return this.findById(user_id);
       });
   }
   
@@ -115,7 +110,7 @@ class UserModel {
       DELETE FROM
           users
       WHERE
-          id = $id
+          user_id = $user_id
     `;
     const params = {
       $user_id: user_id

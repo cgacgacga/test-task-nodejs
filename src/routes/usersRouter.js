@@ -6,7 +6,7 @@ const router = express.Router();
 const UsersController = require('../controllers/usersController');
 const usersController = new UsersController();
 
-router.get('/', (req, res) => {
+router.get('/user/', (req, res) => {
   usersController.findAll(res);
 });
 

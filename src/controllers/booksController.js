@@ -1,17 +1,17 @@
 const Controller = require('./controller');
-const UserModel  = require('../models/userModel');
-const UserEntity = require('../entities/userEntity');
+const BookModel  = require('../models/bookModel');
+const BookEntity = require('../entities/bookEntity');
 
 /**
- * Users Controller
+ * Books Controller
  */
-class UsersController {
+class BooksController {
     /**
      * constructor
      */
     constructor() {
         this.controller = new Controller();
-        this.userModel = new UserModel();
+        this.userModel = new BookModel();
     }
 
     /**
@@ -28,9 +28,9 @@ class UsersController {
      * @param res response
      */
     findById(req, res) {
-        const id = req.params.id;
+        const book_id = req.params.book_id;
 
-        this.userModel.findById(id)
+        this.userModel.findById(book_id)
             .then(this.controller.findSuccess(res))
             .catch(this.controller.findError(res));
     }
@@ -40,13 +40,13 @@ class UsersController {
      * @param res response
      */
     create(req, res) {
-        const user = new UserEntity();
+        const book = new BookEntity();
         // user.id = req.body.id;
-        user.user_name = req.body.user_name;
-        user.user_expiry_date = req.body.user_expiry_date;
-        user.super_user = req.body.super_user;
+        book.book_name = req.body.book_name;
+        book.book_available = req.body.book_available;
 
-        this.userModel.create(user)
+
+        this.userModel.create(book)
             .then(this.controller.createSuccess(res))
             .catch(this.controller.editError(res));
     }
@@ -56,7 +56,7 @@ class UsersController {
      * @param res response
      */
     update(req, res) {
-        const user = new UserEntity(req.body.user_id, req.body.user_expiry_date, req.body.user_name, req.body.super_user);
+        const user = new BookEntity(req.body.book_available, req.body.name, req.body.age);
 
         this.userModel.update(user)
             .then(this.controller.editSuccess(res))
@@ -68,9 +68,9 @@ class UsersController {
      * @param res response
      */
     delete(req, res) {
-        const user_id = req.params.user_id;
+        const id = req.params.id;
 
-        this.userModel.delete(user_id)
+        this.userModel.delete(id)
             .then(this.controller.editSuccess(res))
             .catch((error) => {
                 if(error.errorCode === 21) {
@@ -84,4 +84,4 @@ class UsersController {
     }
 }
 
-module.exports = UsersController;
+module.exports = BooksController;

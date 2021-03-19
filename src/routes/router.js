@@ -10,6 +10,7 @@ router.use((req, res, next) => {
 });
 
 
-router.use('/users', require('./usersRouter'));
+router.use('/user', require('./usersRouter'));
+router.use('/book', require('./booksRouter'));
 
 module.exports = router;
