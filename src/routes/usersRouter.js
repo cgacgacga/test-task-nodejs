@@ -10,7 +10,7 @@ router.get('/user/', (req, res) => {
   usersController.findAll(res);
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:user_id', (req, res) => {
   usersController.findById(req, res);
 });
 
@@ -18,11 +18,11 @@ router.post('/', (req, res) => {
   usersController.create(req, res);
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:user_id', (req, res) => {
   usersController.update(req, res);
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:user_id', (req, res) => {
   usersController.delete(req, res);
 });
 

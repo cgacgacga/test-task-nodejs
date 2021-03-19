@@ -9,6 +9,32 @@ class BookModel {
         this.model = new Model();
     }
 
+    getAllByUserId(user_id) {
+        const sql = `
+      SELECT
+          book_id,
+          book_available,
+          book_name,
+          user_id
+      FROM
+          books
+      WHERE
+          user_id = $user_id
+    `;
+        const params = {
+            $user_id: user_id
+        };
+
+        return this.model.findAll(sql, params)
+            .then((rows) => {
+                const books = [];
+                for(const row of rows) {
+                    books.push(new BookEntity(row.book_id, row.book_available, row.book_name, row.user_id));
+                }
+                return books;
+            });
+    }
+
     findById(book_id) {
         const sql = `
       SELECT
@@ -27,7 +53,7 @@ class BookModel {
 
         return this.model.findOne(sql, params)
             .then((row) => {
-                return new BookEntity(row.book_available, row.book_name, row.user_id);
+                return new BookEntity(row.book_id, row.book_available, row.book_name, row.user_id);
             });
     }
 
@@ -64,7 +90,7 @@ class BookModel {
           book_name,
           user_id
       ) VALUES (
-          $user_id,
+          $book_id,
           $book_available,
           $book_name,
           $user_id
@@ -76,7 +102,7 @@ class BookModel {
             $book_name: book.book_name,
             $user_id : book.user_id
         };
-
+        console.log("update");
         return this.model.run(sql, params);
     }
 
@@ -93,6 +119,13 @@ class BookModel {
         };
 
         return this.model.run(sql, params);
+    }
+
+    giveBookAway(book_id) {
+        const sql = `
+        
+        
+    `;
     }
 }
 

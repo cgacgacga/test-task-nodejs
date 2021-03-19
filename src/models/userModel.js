@@ -83,19 +83,16 @@ class UserModel {
   update(user) {
     const sql = `
       REPLACE INTO users (
-          user_id,
           user_expiry_date,
           user_name,
           super_user
       ) VALUES (
-          $user_id,
           $user_expiry_date,
           $user_name,
           $super_user
       )
     `;
     const params = {
-      $user_id  : user.user_id,
       $user_expiry_date: user.user_expiry_date,
       $user_name: user.user_name,
       $super_user : user.super_user

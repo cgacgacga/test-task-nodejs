@@ -37,7 +37,7 @@ const init = () => {
     db.run("CREATE TABLE IF NOT EXISTS users (\n" +
         "    user_id          INTEGER PRIMARY KEY AUTOINCREMENT\n" +
         "                             UNIQUE,\n" +
-        "    user_expiry_date INTEGER,\n" +
+        "    user_expiry_date TEXT,\n" +
         "    user_name        TEXT,\n" +
         "    super_user       BOOLEAN\n" +
         ");",

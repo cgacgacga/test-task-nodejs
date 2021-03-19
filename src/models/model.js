@@ -15,9 +15,12 @@ class Model {
                 if(error) {
                     reject(new ModelError(20, 'Internal Server Error'));
                 }
+                /*
                 else if(rows === null || rows.length === 0) {
                     reject(new ModelError(21, 'Entity Not Found'));
                 }
+
+                 */
                 else {
                     resolve(rows);
                 }
@@ -50,18 +53,17 @@ class Model {
     }
 
     /**
-     * @param sql SQL 文
-     * @param params パラメータ
+     * @param sql SQL text
+     * @param params parameters
      * @return 1 on update, 0 if rejected
      */
     run(sql, params) {
         return new Promise((resolve, reject) => {
             const stmt = db.prepare(sql);
 
-            // bind() して this を書き換えているのでアロー関数を使わない
             stmt.run(params, function(error) {
                 if(this.changes === 1) {
-                    // lastID は INSERT 時のみ ID を返す
+
                     resolve(this.lastID);
                 }
                 else if(this.changes === 0) {
