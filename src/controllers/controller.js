@@ -1,5 +1,5 @@
 /**
- * Controller : 共通処理
+ * Controller 
  */
 class Controller {
 

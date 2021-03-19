@@ -10,8 +10,7 @@ class UserModel {
   }
   
   /**
-   * 全件取得する
-   * 
+   *
    * @return Entity の配列を Resolve する
    */
   findAll() {
@@ -60,12 +59,7 @@ class UserModel {
       });
   }
   
-  /**
-   * Create user
-   * 
-   * @param user 登録情報を持つ Entity
-   * @return 登録できたら Resolve する
-   */
+
   create(user) {
     // ID は自動採番させる
     const sql = `
@@ -91,10 +85,6 @@ class UserModel {
       });
   }
   
-  /**
-   * @param user 更新情報を持つ Entity
-   * @return 登録 or 更新できたら Resolve する
-   */
   update(user) {
     const sql = `
       REPLACE INTO users (
